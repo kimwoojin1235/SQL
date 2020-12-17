@@ -6,10 +6,10 @@
 이름(first_name last_name),  월급(salary),  전화번호(phone_number), 입사일(hire_date) 순서이고 
 “이름”, “월급”, “전화번호”, “입사일” 로 컬럼이름을 대체해 보세요.
 */
-SELECT  first_name,
-        salary,
-        phone_number,
-        hire_date
+SELECT  first_name 이름,
+        salary 월급,
+        phone_number 전화번호,
+        hire_date 입사일
 FROM employees
 ORDER by hire_date asc;
 /*
@@ -31,7 +31,9 @@ SELECT  first_name,
         salary
 FROM employees
 where commission_pct is null
-AND manager_id is NOT null;
+AND manager_id is NOT null
+and salary >3000
+;
 
 /*
 문제4.

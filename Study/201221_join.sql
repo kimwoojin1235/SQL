@@ -84,8 +84,8 @@ FROM employees;
 --Self Join
 select emp.employee_id, emp.first_name, 
        emp.manager_id, man.first_name manager 
-from employees emp, employees man
-where emp.manager_id = man.employee_id
+from employees emp LEFT OUTER JOIN employees man
+on emp.manager_id = man.employee_id
 ORDER by emp.employee_id DESC;
 
 --잘못된 사용
@@ -94,6 +94,14 @@ FROM employees em, locations lo
 WHERE em.salary=lo.location_id;
 --상관이 없는 것 끼리 비교하고 억지로 묶음
 
-
+--OUTER JOIN 사용시 테이블이 3가지 라면은 on에 테이블을 선언한다.
+--그리고 on을 나오면 WHERE으로 조건을 달아도 됨 
+SELECT  emp.employee_id,
+        emp.first_name,
+        de.department_name,
+        man.first_name manager
+FROM employees emp LEFT OUTER JOIN departments de
+on emp.department_id= de.department_id, employees man
+WHERE man.employee_id=de.manager_id;
 
 

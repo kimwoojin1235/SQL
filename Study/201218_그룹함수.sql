@@ -57,7 +57,7 @@ FROM employees;
 SELECT  department_id ,
         AVG(salary)--오류가남
 FROM employees; 
-
+--오류가 나는 이유는 그룹함수 와 같이 쓸수가 없기 때문이다.
 --그룹으로 묶어서 평균을 구해라
 SELECT  department_id,
         AVG(salary)

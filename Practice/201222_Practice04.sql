@@ -1,3 +1,4 @@
+
 /*문제1.
 평균 급여보다 적은 급여을 받는 직원은 몇명인지 구하시요.
 (56건)
@@ -46,20 +47,20 @@ and d.department_id=(SELECT  department_id
                      FROM employees
                      WHERE first_name ='Steven'
                      AND last_name ='King');
- /*                    
+                
 SELECT  d.location_id,
         lo.street_address,
         lo.postal_code,
         lo.city,
         lo.state_province,
         lo.country_id
-FROM departments d,locations lo,(SELECT  department_id asdepartment_id
+FROM departments d,locations lo,(SELECT  department_id as department_id
                                  FROM employees
                                  WHERE first_name ='Steven'
                                  AND last_name ='King')em
 WHERE d.location_id=lo.location_id
 and d.department_id = em.department_id;
-        */             
+             
 /*
 문제4.
 job_id 가 'ST_MAN' 인 직원의 급여보다 작은 직원의 사번,이름,급여를 급여의 내림차순으로 
@@ -73,7 +74,7 @@ FROM employees
 WHERE salary < any(SELECT salary
                    from employees
                    WHERE job_id='ST_MAN');
-
+                   
 /*
 문제5. 
 각 부서별로 최고의 급여를 받는 사원의 직원번호(employee_id),
@@ -120,16 +121,16 @@ SELECT  job_id,
         sum(salary)
 FROM employees
 GROUP by job_id;
-/*
+
 SELECT  j.job_title 업무명,
         sum(e.salary) 연봉의합
 FROM jobs j,employees e
 WHERE (j.job_id,e.salary) in (SELECT  job_id,
-                               sum(salary)
+                               sum(salary) 
                                FROM employees
                                GROUP by job_id)
-GROUP by j.job_title;
-*/
+GROUP by j.job_title,e.job_id;
+
 SELECT  j.job_title 업무명,
         s.salary 연봉의합
 FROM jobs j,(SELECT  job_id,
@@ -156,12 +157,46 @@ WHERE e.department_id=d.department_id
 and e.salary>d.salary ;
 
 
+/*문제8.
+직원 입사일이 11번째에서 15번째의 직원의 사번, 이름, 급여, 입사일을 입사일 순서로 출력하세요
+*/
+SELECT  employee_id,
+        first_name,
+        salary,
+        hire_date
+FROM employees
+ORDER by hire_date ASC;
 
+SELECT  ROWNUM,
+        o.employee_id,
+        o.first_name,
+        o.salary,
+        o.hire_date
+FROM (SELECT  employee_id,
+              first_name,
+              salary,
+              hire_date
+      FROM employees
+      ORDER by hire_date ASC)o;
 
-
-
-
-
+SELECT  ro.rn,
+        ro.employee_id,
+        ro.first_name,
+        ro.salary,
+        ro.hire_date
+FROM (SELECT  ROWNUM rn,
+        o.employee_id,
+        o.first_name,
+        o.salary,
+        o.hire_date
+FROM (SELECT  employee_id,
+              first_name,
+              salary,
+              hire_date
+      FROM employees
+      ORDER by hire_date ASC)o)ro
+WHERE ro.rn>=11
+AND ro.rn<=15;
 
 
 
